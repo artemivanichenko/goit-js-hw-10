@@ -23,10 +23,8 @@ function handleInputForm(e) {
     .then(countries => {
       container.innerHTML = '';
       countryList.innerHTML = '';
-      if (countries.status === 404) {
-        Notify.failure('Oops, there is no country with that name');
-        // Не работает (((((((((((((())))))))))))))
-      }
+      console.log(countries);
+
       if (countries.length > 1) {
         countryList.innerHTML = listMarkupCountries(countries);
       }
