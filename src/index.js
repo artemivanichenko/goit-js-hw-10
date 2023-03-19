@@ -16,25 +16,25 @@ function handleInputForm(e) {
   e.preventDefault();
   const query = e.target.value.trim().toLowerCase();
   if (!query) {
+    container.innerHTML = '';
+    countryList.innerHTML = '';
     return;
   }
 
   fetchCountries(query)
     .then(countries => {
-      container.innerHTML = '';
-      countryList.innerHTML = '';
-      console.log(countries);
-
-      if (countries.length > 1) {
-        countryList.innerHTML = listMarkupCountries(countries);
-      }
-      if (countries.length === 1) {
-        container.innerHTML = infoMarkupCountries(countries);
-      }
       if (countries.length > 10) {
-        Notify.info(
+        return Notify.info(
           'Too many matches found. Please enter a more specific name'
         );
+      }
+      if (countries.length >= 1 && countries.length <= 10) {
+        countryList.innerHTML = listMarkupCountries(countries);
+        container.innerHTML = '';
+      }
+      if (countries.length === 1) {
+        countryList.innerHTML = '';
+        container.innerHTML = infoMarkupCountries(countries);
       }
     })
     .catch(error => {
